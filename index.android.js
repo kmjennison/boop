@@ -1,32 +1,46 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 
-var React = require('react-native');
-var {
+import React from 'react-native'
+import {
   AppRegistry,
+  Component,
   Navigator,
   Text,
   View,
-} = React;
-var Blah = require('./components/Hello');
+} from 'react-native';
+import HomeView from './components/HomeView';
+import BoopView from './components/BoopView';
 
-var boop = React.createClass({
-  render: function() {
+
+class boop extends Component {
+
+  _renderScene(route) {
+    var Component;
+    switch (route) {
+      case 'home':
+        Component = HomeView;
+        break;
+      case 'boop-view':
+        Component = BoopView;
+        break;
+      default:
+        Component = HomeView;
+    }
+    return <Component />;
+  }
+
+  render() {
     return (
       <Navigator
         initialRoute={{
-          name: 'My First Scene',
+          name: 'home',
           index: 0,
         }}
-        renderScene={(route, navigator) =>
-          <Blah />
-        }
+        renderScene={this._renderScene}
       />
     );
   }
-});
+
+};
 
 AppRegistry.registerComponent('boop', () => boop);
