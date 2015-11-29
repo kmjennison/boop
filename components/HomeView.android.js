@@ -88,11 +88,10 @@ class HomeView extends Component {
         height: 80,
         transform: [
           {scale: circleButtonTranformVal},
-        ]
+        ],
       };
       return (
-        <View key={index} style={styles.friendElem}>
-          <View style={styles.friendButton}>
+        <View style={styles.friendButton}>
           <TouchableHighlight
             style={styles.circleTouchable}
             onPress={() => {
@@ -104,12 +103,11 @@ class HomeView extends Component {
             }}
             underlayColor='#CDCDCD'>
               <Animated.View style={[styles.circle, circleButtonStyle, {backgroundColor: color}]} />
-            </TouchableHighlight>
-            <Text
-              style={styles.friendName}>
-                {friend.firstName}
-            </Text>
-          </View>
+          </TouchableHighlight>
+          <Text
+            style={styles.friendName}>
+              {friend.firstName}
+          </Text>
         </View>
       );
     });
@@ -130,19 +128,16 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: colors.darkTheme.primary,
   },
-  friendElem: {
+  friendButton: {
     height: 120,
     width: 100,
     margin: 4,
-  },
-  friendButton: {
-    flex: 1,
     padding: 10,
     alignItems: 'center',
   },
   circle: {
     borderRadius: 100/2,
-    backgroundColor: 'red'
+    backgroundColor: 'red',
   },
   circleTouchable: {
     borderRadius: 100/2,
