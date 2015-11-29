@@ -39,7 +39,7 @@ class BoopView extends Component {
 const styles = StyleSheet.create({
   button: {
     color: '#FF0000',
-  }
+  },
 });
 
 AppRegistry.registerComponent('BoopView', () => BoopView);

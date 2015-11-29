@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import BoopView from './BoopView';
 import HomeView from './HomeView';
+import NavBar from './NavBar';
 
 
 class BoopNavigator extends Component {
@@ -45,6 +46,9 @@ class BoopNavigator extends Component {
           }
           return Navigator.SceneConfigs.FloatFromRight;
         }}
+        navigationBar={
+          <NavBar />
+        }
       />
     );
   }
