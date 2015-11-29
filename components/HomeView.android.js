@@ -2,6 +2,7 @@
 
 import React from 'react-native'
 import {
+  Animated,
   AppRegistry,
   Component,
   StyleSheet,
@@ -18,15 +19,20 @@ class HomeView extends Component {
     super(props);
     this.state = {
       selectedButton: null,
-      selectedButtonSize: 80,
+      selectedButtonScale: new Animated.Value(1),
       navigateToBoopViewInProgress: false,
     };
   }
 
   increaseButtonSize() {
-    this.setState({
-      selectedButtonSize: 100,
-    });
+    // this.state.selectedButtonScale.setValue(1.1);
+    Animated.timing(
+      this.state.selectedButtonScale,
+      {
+        toValue: 1.4,
+        duration: 200,
+      }
+    ).start();
   }
   
   navigateToBoopView() {
@@ -36,6 +42,7 @@ class HomeView extends Component {
   }
 
   navigateToBoopViewDelay() {
+    // Make sure we're not already in the process of navigating.
     if (this.state.navigateToBoopViewInProgress) {
       return;
     }
@@ -66,16 +73,22 @@ class HomeView extends Component {
       '#bcbd22',
       '#17becf',
     ];
+    // Build all the friend buttons.
     const friendElems = data.friends.map(function(friend, index) {
+      // Cycle through the colors for each friend button.
       const color = colors[index % colors.length];
-      const buttonSize = (
-        self.state.selectedButton == friend.id ?
-        self.state.selectedButtonSize :
-        80
-      );
+      // If this button is selected, give it the selected
+      // tranform value.
+      var circleButtonTranformVal = 1;
+      if (self.state.selectedButton == friend.id) {
+        circleButtonTranformVal = self.state.selectedButtonScale;
+      }
       const circleButtonStyle = {
-        width: buttonSize,
-        height: buttonSize,
+        width: 80,
+        height: 80,
+        transform: [
+          {scale: circleButtonTranformVal},
+        ]
       };
       return (
         <View key={index} style={styles.friendElem}>
@@ -90,7 +103,7 @@ class HomeView extends Component {
               self.navigateToBoopViewDelay();
             }}
             underlayColor='#CDCDCD'>
-              <View style={[styles.circle, circleButtonStyle, {backgroundColor: color}]} />
+              <Animated.View style={[styles.circle, circleButtonStyle, {backgroundColor: color}]} />
             </TouchableHighlight>
             <Text
               style={styles.friendName}>
