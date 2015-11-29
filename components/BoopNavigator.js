@@ -25,10 +25,46 @@ class BoopNavigator extends Component {
       default:
         Component = HomeView;
     }
+
+    // TODO: get real data.
+    const data = {
+      user: {
+        firstName: 'Frances',
+        lastName: 'Jones',
+      },
+      friends: [
+        {
+          firstName: 'Katniss',
+          lastName: 'Everdeen',
+        },
+        {
+          firstName: 'Dean',
+          lastName: 'Thomas',
+        },
+        {
+          firstName: 'Leah',
+          lastName: 'Price',
+        },
+        {
+          firstName: 'Elphaba',
+          lastName: 'Thropp',
+        },
+        {
+          firstName: 'Meg',
+          lastName: 'Murry',
+        },
+        {
+          firstName: 'Joe',
+          lastName: 'Hardy',
+        },
+      ],
+    };
+
     return (
       <Component
         name={route.name}
         navigator={navigator}
+        data={data}
       />
     );
   }
