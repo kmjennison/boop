@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
+import { colors } from './globalStyle';
 
 
 class BoopView extends Component {
@@ -23,8 +24,8 @@ class BoopView extends Component {
 
   render() {
     return (
-      <View>
-        <Text>Boop view!</Text>
+      <View style={styles.container}>
+        <Text style={styles.text} >Boop view!</Text>
         <TouchableHighlight onPress={this.onClickBackToHome.bind(this)}>
           <Text
             style={styles.button}>
@@ -37,6 +38,13 @@ class BoopView extends Component {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.darkTheme.primary,
+  },
+  text: {
+    color: colors.darkTheme.text1,
+  },
   button: {
     color: '#FF0000',
   },

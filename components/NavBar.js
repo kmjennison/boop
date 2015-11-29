@@ -8,7 +8,7 @@ import {
   ToolbarAndroid,
   View,
 } from 'react-native';
-import globalStyle from './globalStyle';
+import globalStyle, { colors } from './globalStyle';
 
 
 class NavBar extends Component {
@@ -43,6 +43,7 @@ class NavBar extends Component {
       <ToolbarAndroid
         style={globalStyle.toolbar}
         title='boop'
+        titleColor={colors.darkTheme.text1}
         actions={toolbarActions}
         onActionSelected={this.onClickBackToHome.bind(this)}
       />

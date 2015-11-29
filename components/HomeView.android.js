@@ -9,6 +9,7 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
+import { colors } from './globalStyle';
 
 
 class HomeView extends Component {
@@ -18,6 +19,7 @@ class HomeView extends Component {
       name: 'boop-view',
     });
   }
+
   render() {
     const { data } = this.props;
     const self = this;
@@ -66,6 +68,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     padding: 20,
+    backgroundColor: colors.darkTheme.primary,
   },
   friendElem: {
     height: 120,
@@ -86,6 +89,7 @@ const styles = StyleSheet.create({
   friendName: {
     textAlign: 'center',
     fontSize: 16,
+    color: colors.darkTheme.text1,
   },
 });
 
