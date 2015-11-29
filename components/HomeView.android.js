@@ -13,8 +13,22 @@ import { colors } from './globalStyle';
 
 
 class HomeView extends Component {
+
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      selectedButton: null,
+      selectedButtonSize: 80,
+    };
+  }
+
+  increaseButtonSize() {
+    this.setState({
+      selectedButtonSize: 100,
+    });
+  }
   
-  onButtonPress() {
+  navigateToBoopView() {
     this.props.navigator.push({
       name: 'boop-view',
     });
@@ -37,19 +51,37 @@ class HomeView extends Component {
     ];
     const friendElems = data.friends.map(function(friend, index) {
       const color = colors[index % colors.length];
+      const buttonSize = (
+        self.state.selectedButton == friend.id ?
+        self.state.selectedButtonSize :
+        80
+      );
+      const circleButtonStyle = {
+        width: buttonSize,
+        height: buttonSize,
+      };
       return (
         <View key={index} style={styles.friendElem}>
+          <View style={styles.friendButton}>
           <TouchableHighlight
-            onPress={self.onButtonPress.bind(self)}
+            style={styles.circleTouchable}
+            onPress={() => {
+              self.setState({
+                selectedButton: friend.id,
+              });
+              self.increaseButtonSize();
+              setTimeout(function() {
+                self.navigateToBoopView();                
+              }, 1000);
+            }}
             underlayColor='#CDCDCD'>
-              <View style={styles.friendButton}>
-                <View style={[styles.circle, {backgroundColor: color}]} />
-                <Text
-                  style={styles.friendName}>
-                    {friend.firstName}
-                </Text>
-              </View>
-          </TouchableHighlight>
+              <View style={[styles.circle, circleButtonStyle, {backgroundColor: color}]} />
+            </TouchableHighlight>
+            <Text
+              style={styles.friendName}>
+                {friend.firstName}
+            </Text>
+          </View>
         </View>
       );
     });
@@ -81,10 +113,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   circle: {
-    width: 80,
-    height: 80,
     borderRadius: 100/2,
     backgroundColor: 'red'
+  },
+  circleTouchable: {
+    borderRadius: 100/2,
   },
   friendName: {
     textAlign: 'center',

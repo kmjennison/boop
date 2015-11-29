@@ -34,26 +34,32 @@ class BoopNavigator extends Component {
       },
       friends: [
         {
+          id: 102,
           firstName: 'Katniss',
           lastName: 'Everdeen',
         },
         {
+          id: 145,
           firstName: 'Dean',
           lastName: 'Thomas',
         },
         {
+          id: 4456,
           firstName: 'Leah',
           lastName: 'Price',
         },
         {
+          id: 73,
           firstName: 'Elphaba',
           lastName: 'Thropp',
         },
         {
+          id: 1,
           firstName: 'Meg',
           lastName: 'Murry',
         },
         {
+          id: 89,
           firstName: 'Joe',
           lastName: 'Hardy',
         },
