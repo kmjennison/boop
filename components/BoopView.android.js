@@ -4,6 +4,7 @@ import React from 'react-native'
 import {
   AppRegistry,
   Component,
+  Navigator,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -16,6 +17,7 @@ class BoopView extends Component {
   onClickBackToHome() {
     this.props.navigator.push({
       name: 'home',
+      sceneConfig: Navigator.SceneConfigs.FloatFromLeft,
     });
   }
 

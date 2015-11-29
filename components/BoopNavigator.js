@@ -39,6 +39,12 @@ class BoopNavigator extends Component {
           name: 'home',
         }}
         renderScene={this.renderScene.bind(this)}
+        configureScene={(route) => {
+          if (route.sceneConfig) {
+            return route.sceneConfig;
+          }
+          return Navigator.SceneConfigs.FloatFromRight;
+        }}
       />
     );
   }
