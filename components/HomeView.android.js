@@ -83,9 +83,11 @@ class HomeView extends Component {
       if (self.state.selectedButton == friend.id) {
         circleButtonTranformVal = self.state.selectedButtonScale;
       }
+      const circleDiameter = 80;
       const circleButtonStyle = {
-        width: 80,
-        height: 80,
+        width: circleDiameter,
+        height: circleDiameter,
+        borderRadius: circleDiameter/2,
         transform: [
           {scale: circleButtonTranformVal},
         ],
@@ -136,8 +138,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   circle: {
-    borderRadius: 100/2,
+    borderRadius: 80/2,
     backgroundColor: 'red',
+    height: 80,
+    width: 80,
   },
   circleTouchable: {
     borderRadius: 100/2,
