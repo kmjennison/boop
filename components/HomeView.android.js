@@ -19,6 +19,7 @@ class HomeView extends Component {
     this.state = {
       selectedButton: null,
       selectedButtonSize: 80,
+      navigateToBoopViewInProgress: false,
     };
   }
 
@@ -32,6 +33,22 @@ class HomeView extends Component {
     this.props.navigator.push({
       name: 'boop-view',
     });
+  }
+
+  navigateToBoopViewDelay() {
+    if (this.state.navigateToBoopViewInProgress) {
+      return;
+    }
+    this.setState({
+      navigateToBoopViewInProgress: true,
+    });
+    const self = this;
+    const t = setTimeout(function() {
+      self.navigateToBoopView();
+      self.setState({
+        navigateToBoopViewInProgress: false,
+      });
+    }, 1000);
   }
 
   render() {
@@ -70,9 +87,7 @@ class HomeView extends Component {
                 selectedButton: friend.id,
               });
               self.increaseButtonSize();
-              setTimeout(function() {
-                self.navigateToBoopView();                
-              }, 1000);
+              self.navigateToBoopViewDelay();
             }}
             underlayColor='#CDCDCD'>
               <View style={[styles.circle, circleButtonStyle, {backgroundColor: color}]} />
