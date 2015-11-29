@@ -11,7 +11,6 @@ import {
   View,
 } from 'react-native';
 import { colors } from './globalStyle';
-import Dimensions from 'Dimensions';
 
 
 class HomeView extends Component {
@@ -19,8 +18,6 @@ class HomeView extends Component {
   constructor(props: any) {
     super(props);
     this.state = {
-      defaultButtonSize: 80,
-      animationDuration: 400,
       selectedButton: null,
       selectedButtonScale: new Animated.Value(1),
       navigateToBoopViewInProgress: false,
@@ -28,23 +25,12 @@ class HomeView extends Component {
   }
 
   increaseButtonSize() {
-    // Find out how much we have to scale the button to cover
-    // the entire screen. We don't want to pick an arbitrary scale
-    // value because we might fail to cover the screen or we might
-    // cover the screen too quickly.
-    const screenWidth = Dimensions.get('window').width;
-    const screenHeight = Dimensions.get('window').height;
-    const maxScreenDimension = Math.max(screenWidth, screenHeight);
-    const currentButtonSize = this.state.defaultButtonSize;
-    const multipleToScale = 2 * (maxScreenDimension / currentButtonSize);
-
-    // Animate the button scaling.
-    this.state.selectedButtonScale.setValue(1);
+    // this.state.selectedButtonScale.setValue(1.1);
     Animated.timing(
       this.state.selectedButtonScale,
       {
-        toValue: multipleToScale,
-        duration: this.state.animationDuration,
+        toValue: 1.4,
+        duration: 200,
       }
     ).start();
   }
@@ -69,7 +55,7 @@ class HomeView extends Component {
       self.setState({
         navigateToBoopViewInProgress: false,
       });
-    }, self.state.animationDuration + 100);
+    }, 1000);
   }
 
   render() {
@@ -89,43 +75,25 @@ class HomeView extends Component {
     ];
     // Build all the friend buttons.
     const friendElems = data.friends.map(function(friend, index) {
-
-      // Create the button style.
       // Cycle through the colors for each friend button.
       const color = colors[index % colors.length];
       // If this button is selected, give it the selected
       // tranform value.
       var circleButtonTranformVal = 1;
-      const circleDiameter = self.state.defaultButtonSize;
-      const isSelected = self.state.selectedButton == friend.id;
+      if (self.state.selectedButton == friend.id) {
+        circleButtonTranformVal = self.state.selectedButtonScale;
+      }
+      const circleDiameter = 80;
       const circleButtonStyle = {
         width: circleDiameter,
         height: circleDiameter,
         borderRadius: circleDiameter/2,
         transform: [
-          {
-            scale: (
-              isSelected ?
-              self.state.selectedButtonScale :
-              1
-            ),
-          },
+          {scale: circleButtonTranformVal},
         ],
-        backgroundColor: color,
-        overflow: 'visible',
       };
-
-      // Build the button element.
-      var friendButtonCircle;
-      var key;
-      if (isSelected) {
-        key = 'friend-button-' + index + '-selected';
-        friendButtonCircle = (
-          <Animated.View style={[styles.circle, circleButtonStyle]} />
-        );
-      } else {
-        key = 'friend-button-' + index + '';
-        friendButtonCircle = (
+      return (
+        <View style={styles.friendButton}>
           <TouchableHighlight
             style={styles.circleTouchable}
             onPress={() => {
@@ -136,14 +104,8 @@ class HomeView extends Component {
               self.navigateToBoopViewDelay();
             }}
             underlayColor='#CDCDCD'>
-              <View style={[styles.circle, circleButtonStyle]} />
+              <Animated.View style={[styles.circle, circleButtonStyle, {backgroundColor: color}]} />
           </TouchableHighlight>
-        );
-      }
-
-      return (
-        <View key={key} style={styles.friendButton}>
-          {friendButtonCircle}
           <Text
             style={styles.friendName}>
               {friend.firstName}
@@ -151,7 +113,6 @@ class HomeView extends Component {
         </View>
       );
     });
-
     return (
       <View style={styles.container}>
         {friendElems}
