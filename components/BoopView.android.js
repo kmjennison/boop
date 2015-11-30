@@ -15,6 +15,14 @@ import { colors } from './globalStyle';
 
 class BoopView extends Component {
 
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      touching: false,
+      touchLocation: {x: 0, y: 0},
+    };
+  }
+
   onClickBackToHome() {
     this.props.navigator.push({
       name: 'home',
@@ -22,9 +30,67 @@ class BoopView extends Component {
     });
   }
 
+  updateIsTouching(isTouching) {
+    this.setState({
+      touching: isTouching,
+    });
+  }
+
+  updateTouchLocation(x, y) {
+    this.setState({
+      touchLocation: {
+        x: x,
+        y: y,
+      }
+    });
+  }
+
+  onTouch(e) {
+    this.updateIsTouching(true);
+    this.updateTouchLocation(e.nativeEvent.locationX,
+      e.nativeEvent.locationY);
+  }
+
+  onTouchMove(e) {
+    this.updateTouchLocation(e.nativeEvent.locationX,
+      e.nativeEvent.locationY);
+  }
+
+  onTouchUp(e) {
+    this.updateIsTouching(false);
+    this.updateTouchLocation(e.nativeEvent.locationX,
+      e.nativeEvent.locationY);
+  }
+
   render() {
+
+    // If the user is touching, show them a visual.
+    var touchVisual;
+    if (this.state.touching) {
+      const touchVisualDiameter = 100;
+      const touchVisualLocationStyle = {
+        position: 'absolute',
+        top: this.state.touchLocation.y - (touchVisualDiameter / 2),
+        left: this.state.touchLocation.x - (touchVisualDiameter / 2),
+        width: touchVisualDiameter,
+        height: touchVisualDiameter,
+        borderRadius: touchVisualDiameter/2,
+      };
+      touchVisual = (
+        <View
+          style={[styles.touchVisual, touchVisualLocationStyle]}>
+        </View>
+      )
+    }
+
     return (
-      <View style={styles.container}>
+      <View
+        style={styles.container}
+        onStartShouldSetResponder={() => { return true;}}
+        onResponderTerminationRequest={() => { return false;}}
+        onResponderGrant={this.onTouch.bind(this)}
+        onResponderMove={this.onTouchMove.bind(this)}
+        onResponderRelease={this.onTouchUp.bind(this)}>
         <Text style={styles.text} >Boop view!</Text>
         <TouchableHighlight onPress={this.onClickBackToHome.bind(this)}>
           <Text
@@ -32,6 +98,7 @@ class BoopView extends Component {
               Back to home
           </Text>
         </TouchableHighlight>
+        {touchVisual}
       </View>
     );
   }
@@ -47,6 +114,11 @@ const styles = StyleSheet.create({
   },
   button: {
     color: '#FF0000',
+  },
+  touchVisual: {
+    width: 100,
+    height: 100,
+    backgroundColor: 'green',
   },
 });
 
