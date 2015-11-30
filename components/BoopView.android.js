@@ -118,7 +118,17 @@ const styles = StyleSheet.create({
   touchVisual: {
     width: 100,
     height: 100,
-    backgroundColor: 'green',
+    backgroundColor: colors.boopTouchColors.pink,
+    // Shadow is only available on iOS right now:
+    // https://facebook.github.io/react-native/docs/known-issues.html#view-shadows
+    // shadowColor: '#FFF',
+    // shadowOffset: {width: 20, height: 20},
+    // shadowRadius: 20,
+    // shadowOpacity: 0.8,
+    borderWidth: 2,
+    borderColor: colors.boopTouchColors.pink,
+    borderStyle: 'solid',
+    opacity: 0.70,
   },
 });
 

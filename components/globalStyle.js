@@ -11,6 +11,11 @@ export const colors = {
     secondary: '#212121',
     text1: '#E4E4E4',
   },
+  boopTouchColors: {
+    green: '#35FF44',
+    pink: '#FC28FF',
+    blue: '#47F7FF',
+  }
 };
 
 const globalStyle = StyleSheet.create({
