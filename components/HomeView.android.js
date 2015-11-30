@@ -55,7 +55,7 @@ class HomeView extends Component {
       self.setState({
         navigateToBoopViewInProgress: false,
       });
-    }, 1000);
+    }, 300);
   }
 
   render() {
