@@ -1,4 +1,4 @@
-package com.boop;
+package com.kevinjennison.boop;
 import android.app.Application;
 import com.parse.Parse;
 import com.parse.ParseInstallation;

@@ -1,4 +1,4 @@
-package com.boop;
+package com.kevinjennison.boop;
 
 import android.app.Activity;
 import android.os.Bundle;

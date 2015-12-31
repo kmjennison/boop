@@ -52,9 +52,8 @@ apply from: "react.gradle"
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
-
     defaultConfig {
-        applicationId "com.boop"
+        applicationId 'com.kevinjennison.boop'
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
@@ -69,7 +68,11 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    productFlavors {
+    }
 }
+
+repositories { mavenCentral() }
 
 dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
