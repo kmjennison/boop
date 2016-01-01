@@ -24,6 +24,12 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // TODO: probably more useful to use Parse in react-native rather than
+        // the Android SDK. See:
+        // https://github.com/ParsePlatform/ParseReact
+        // https://github.com/ParsePlatform/ParseReact/blob/master/docs/api/ES6.md
+        // https://github.com/magus/react-native-facebook-login
+
         // Force login if not logged in.
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser == null) {
