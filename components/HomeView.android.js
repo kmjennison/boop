@@ -11,9 +11,12 @@ import {
   View,
 } from 'react-native';
 import { colors } from './globalStyle';
+import Parse from 'parse/react-native'
+import ParseReact from 'parse-react/react-native';
+const ParseComponent = ParseReact.Component(React);
 
 
-class HomeView extends Component {
+class HomeView extends ParseComponent {
 
   constructor(props: any) {
     super(props);
@@ -21,6 +24,13 @@ class HomeView extends Component {
       selectedButton: null,
       selectedButtonScale: new Animated.Value(1),
       navigateToBoopViewInProgress: false,
+    };
+  }
+
+  observe(props, state) {
+    return {
+      user: ParseReact.currentUser,
+      test: (new Parse.Query('Test')),
     };
   }
 
@@ -73,6 +83,8 @@ class HomeView extends Component {
       '#bcbd22',
       '#17becf',
     ];
+    // console.log('Parse data', this.data);
+
     // Build all the friend buttons.
     const friendElems = data.friends.map(function(friend, index) {
       // Cycle through the colors for each friend button.
