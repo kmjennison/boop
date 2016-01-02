@@ -1,8 +1,4 @@
 <resources>
     <string name="app_name">boop</string>
-    <string-array name="boop_facebook_permissions">
-        <item>public_profile</item>
-        <item>user_friends</item>
-    </string-array>
-    <string name="facebook_app_id">831546353634107</string>
+    <string name="fb_app_id">831546353634107</string>
 </resources>

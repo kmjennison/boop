@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import BoopView from './BoopView';
 import HomeView from './HomeView';
+import LoginView from './LoginView';
 import NavBar from './NavBar';
 
 
@@ -18,6 +19,9 @@ class BoopNavigator extends Component {
     switch (route.name) {
       case 'home':
         Component = HomeView;
+        break;
+      case 'login-view':
+        Component = LoginView;
         break;
       case 'boop-view':
         Component = BoopView;

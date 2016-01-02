@@ -1,6 +1,7 @@
 package com.kevinjennison.boop;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -10,7 +11,6 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
-
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -22,6 +22,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
     private ReactInstanceManager mReactInstanceManager;
     private ReactRootView mReactRootView;
 
+    private FacebookLoginPackage mFacebookLoginPackage;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -32,12 +33,9 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: probably more useful to use Parse in react-native rather than
-        // the Android SDK. See:
-        // https://github.com/ParsePlatform/ParseReact
-        // https://github.com/ParsePlatform/ParseReact/blob/master/docs/api/ES6.md
-        // https://github.com/magus/react-native-facebook-login
         mReactRootView = new ReactRootView(this);
+
+        mFacebookLoginPackage = new FacebookLoginPackage(this);
 
         mReactInstanceManager = ReactInstanceManager.builder()
                 .setApplication(getApplication())
@@ -46,6 +44,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .addPackage(new MainReactPackage())
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
+                .addPackage(mFacebookLoginPackage)
                 .build();
 
         mReactRootView.startReactApplication(mReactInstanceManager, "boop", null);
@@ -67,16 +66,16 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
 
     @Override
     public void onBackPressed() {
-      if (mReactInstanceManager != null) {
-        mReactInstanceManager.onBackPressed();
-      } else {
-        super.onBackPressed();
-      }
+        if (mReactInstanceManager != null) {
+            mReactInstanceManager.onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
     public void invokeDefaultOnBackPressed() {
-      super.onBackPressed();
+        super.onBackPressed();
     }
 
     @Override
@@ -96,6 +95,14 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
             mReactInstanceManager.onResume(this, this);
         }
     }
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        mFacebookLoginPackage.handleActivityResult(requestCode, resultCode, data);
+    }
+
     @Override
     public void onStart() {
         super.onStart();

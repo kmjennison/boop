@@ -5,6 +5,7 @@ import {
   Animated,
   AppRegistry,
   Component,
+  NativeModules,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -14,6 +15,8 @@ import { colors } from './globalStyle';
 import Parse from 'parse/react-native'
 import ParseReact from 'parse-react/react-native';
 const ParseComponent = ParseReact.Component(React);
+import FBLogin from 'react-native-facebook-login';
+// const FBLoginManager = NativeModules.FBLoginManager; // if needed
 
 
 class HomeView extends ParseComponent {
@@ -127,7 +130,17 @@ class HomeView extends ParseComponent {
     });
     return (
       <View style={styles.container}>
-        {friendElems}
+        <FBLogin
+          permissions={["email","user_friends"]}
+          // loginBehavior={FBLoginManager.LoginBehaviors.Native}
+          onLogin={function(e){console.log(e)}}
+          onLogout={function(e){console.log(e)}}
+          onCancel={function(e){console.log(e)}}
+          onPermissionsMissing={function(e){console.log(e)}}
+        />
+        <View style={styles.friendsContainer}>
+          {friendElems}
+        </View>
       </View>
     );
   }
@@ -135,12 +148,15 @@ class HomeView extends ParseComponent {
 
 const styles = StyleSheet.create({
   container: {
+    padding: 20,
+    flex: 1,
+    backgroundColor: colors.darkTheme.primary,
+  },
+  friendsContainer: {
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    padding: 20,
-    backgroundColor: colors.darkTheme.primary,
   },
   friendButton: {
     height: 120,
