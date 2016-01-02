@@ -15,8 +15,7 @@ import { colors } from './globalStyle';
 import Parse from 'parse/react-native'
 import ParseReact from 'parse-react/react-native';
 const ParseComponent = ParseReact.Component(React);
-import FBLogin from 'react-native-facebook-login';
-// const FBLoginManager = NativeModules.FBLoginManager; // if needed
+import FacebookLoginButton from './FacebookLoginButton';
 
 
 class HomeView extends ParseComponent {
@@ -130,14 +129,7 @@ class HomeView extends ParseComponent {
     });
     return (
       <View style={styles.container}>
-        <FBLogin
-          permissions={["email","user_friends"]}
-          // loginBehavior={FBLoginManager.LoginBehaviors.Native}
-          onLogin={function(e){console.log(e)}}
-          onLogout={function(e){console.log(e)}}
-          onCancel={function(e){console.log(e)}}
-          onPermissionsMissing={function(e){console.log(e)}}
-        />
+        <FacebookLoginButton />
         <View style={styles.friendsContainer}>
           {friendElems}
         </View>

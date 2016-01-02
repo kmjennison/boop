@@ -10,7 +10,7 @@ import {
 import Parse from 'parse/react-native'
 import ParseReact from 'parse-react/react-native';
 const ParseComponent = ParseReact.Component(React);
-import FBLogin from 'react-native-facebook-login';
+import FacebookLoginButton from './FacebookLoginButton';
 
 class LoginView extends ParseComponent {
 
@@ -24,12 +24,7 @@ class LoginView extends ParseComponent {
     const { data } = this.props;
     return (
       <View style={styles.container}>
-        <FBLogin
-            onLogin={function(e){console.log(e)}}
-            onLogout={function(e){console.log(e)}}
-            onCancel={function(e){console.log(e)}}
-            onPermissionsMissing={function(e){console.log(e)}}
-          />
+        <FacebookLoginButton />
       </View>
     );
   }
