@@ -45,51 +45,12 @@ class BoopNavigator extends ParseComponent {
       }
     }
 
-    // TODO: get real data.
-    const data = {
-      user: {
-        firstName: 'Frances',
-        lastName: 'Jones',
-      },
-      friends: [
-        {
-          id: 102,
-          firstName: 'Katniss',
-          lastName: 'Everdeen',
-        },
-        {
-          id: 145,
-          firstName: 'Dean',
-          lastName: 'Thomas',
-        },
-        {
-          id: 4456,
-          firstName: 'Leah',
-          lastName: 'Price',
-        },
-        {
-          id: 73,
-          firstName: 'Elphaba',
-          lastName: 'Thropp',
-        },
-        {
-          id: 1,
-          firstName: 'Meg',
-          lastName: 'Murry',
-        },
-        {
-          id: 89,
-          firstName: 'Joe',
-          lastName: 'Hardy',
-        },
-      ],
-    };
 
     return (
       <Component
         name={route.name}
         navigator={navigator}
-        data={data}
+        user={this.data.user}
       />
     );
   }

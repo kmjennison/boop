@@ -26,6 +26,7 @@ class HomeView extends ParseComponent {
       selectedButton: null,
       selectedButtonScale: new Animated.Value(1),
       navigateToBoopViewInProgress: false,
+      friends: [],
     };
   }
 
@@ -34,6 +35,49 @@ class HomeView extends ParseComponent {
       user: ParseReact.currentUser,
       test: (new Parse.Query('Test')),
     };
+  }
+
+  componentWillMount() {
+    this.fetchFriends();
+  }
+
+  fetchFriends() {
+    // TODO: use real data
+    const friends = [
+      {
+        id: 102,
+        firstName: 'Katniss',
+        lastName: 'Everdeen',
+      },
+      {
+        id: 145,
+        firstName: 'Dean',
+        lastName: 'Thomas',
+      },
+      {
+        id: 4456,
+        firstName: 'Leah',
+        lastName: 'Price',
+      },
+      {
+        id: 73,
+        firstName: 'Elphaba',
+        lastName: 'Thropp',
+      },
+      {
+        id: 1,
+        firstName: 'Meg',
+        lastName: 'Murry',
+      },
+      {
+        id: 89,
+        firstName: 'Joe',
+        lastName: 'Hardy',
+      },
+    ];
+    this.setState({
+      friends: friends,
+    })
   }
 
   increaseButtonSize() {
@@ -71,7 +115,7 @@ class HomeView extends ParseComponent {
   }
 
   render() {
-    const { data } = this.props;
+    const user = this.props.user;
     const self = this;
     const colors = [
       '#1f77b4',
@@ -88,7 +132,7 @@ class HomeView extends ParseComponent {
     // console.log('Parse data', this.data);
 
     // Build all the friend buttons.
-    const friendElems = data.friends.map(function(friend, index) {
+    const friendElems = this.state.friends.map(function(friend, index) {
       // Cycle through the colors for each friend button.
       const color = colors[index % colors.length];
       // If this button is selected, give it the selected
