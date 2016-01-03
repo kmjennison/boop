@@ -10,24 +10,39 @@ import BoopView from './BoopView';
 import HomeView from './HomeView';
 import LoginView from './LoginView';
 import NavBar from './NavBar';
+import ParseReact from 'parse-react/react-native';
+const ParseComponent = ParseReact.Component(React);
 
 
-class BoopNavigator extends Component {
+class BoopNavigator extends ParseComponent {
+
+  observe(props, state) {
+    return {
+      user: ParseReact.currentUser,
+    };
+  }
 
   renderScene(route, navigator) {
     var Component;
-    switch (route.name) {
-      case 'home':
-        Component = HomeView;
-        break;
-      case 'login-view':
-        Component = LoginView;
-        break;
-      case 'boop-view':
-        Component = BoopView;
-        break;
-      default:
-        Component = HomeView;
+    
+    // If the user isn't logged in, show the login view.
+    if (!this.data.user) {
+      Component = LoginView;
+    }
+    else {
+      switch (route.name) {
+        case 'home':
+          Component = HomeView;
+          break;
+        case 'login-view':
+          Component = LoginView;
+          break;
+        case 'boop-view':
+          Component = BoopView;
+          break;
+        default:
+          Component = HomeView;
+      }
     }
 
     // TODO: get real data.
