@@ -15,11 +15,11 @@ class FacebookLoginButton extends Component {
   logIn(e) {
     console.log('User logging in: ', e);
 
-    const userId = e.profile.id;
+    const fbUserId = e.profile.id;
     const token = e.token;
 
     const authData = {
-      id: userId,
+      id: fbUserId,
       access_token: token,
       expiration_date: (new Date(e.expiration)).toISOString(),
     };
@@ -44,6 +44,7 @@ class FacebookLoginButton extends Component {
             firstName: e.profile.first_name,
             lastName: e.profile.last_name,
             photoUrl: e.profile.picture.data.url,
+            fbId: fbUserId,
           }).dispatch({waitForServer: true});
         }
       },
