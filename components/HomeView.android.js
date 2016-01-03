@@ -37,7 +37,7 @@ class HomeView extends ParseComponent {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.fetchFriends();
   }
 
