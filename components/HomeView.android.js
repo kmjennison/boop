@@ -5,6 +5,7 @@ import {
   Animated,
   AppRegistry,
   Component,
+  Image,
   NativeModules,
   StyleSheet,
   Text,
@@ -130,10 +131,9 @@ class HomeView extends ParseComponent {
     this.setState({
       navigateToBoopViewInProgress: true,
     });
-    const self = this;
-    const t = setTimeout(function() {
-      self.navigateToBoopView();
-      self.setState({
+    const t = setTimeout(() => {
+      this.navigateToBoopView();
+      this.setState({
         navigateToBoopViewInProgress: false,
       });
     }, 300);
@@ -141,7 +141,6 @@ class HomeView extends ParseComponent {
 
   render() {
     const user = this.props.user;
-    const self = this;
     const colors = [
       '#1f77b4',
       '#ff7f0e',
@@ -156,14 +155,14 @@ class HomeView extends ParseComponent {
     ];
 
     // Build all the friend buttons.
-    const friendElems = this.state.friends.map(function(friend, index) {
+    const friendElems = this.state.friends.map((friend, index) => {
       // Cycle through the colors for each friend button.
       const color = colors[index % colors.length];
       // If this button is selected, give it the selected
       // tranform value.
       var circleButtonTranformVal = 1;
-      if (self.state.selectedButton == friend.id) {
-        circleButtonTranformVal = self.state.selectedButtonScale;
+      if (this.state.selectedButton == friend.id) {
+        circleButtonTranformVal = this.state.selectedButtonScale;
       }
       const circleDiameter = 80;
       const circleButtonStyle = {
@@ -174,19 +173,24 @@ class HomeView extends ParseComponent {
           {scale: circleButtonTranformVal},
         ],
       };
+      const profilePic = friend.picture.data.url;
       return (
         <View style={styles.friendButton}>
           <TouchableHighlight
             style={styles.circleTouchable}
             onPress={() => {
-              self.setState({
+              this.setState({
                 selectedButton: friend.id,
               });
-              self.increaseButtonSize();
-              self.navigateToBoopViewDelay();
+              this.increaseButtonSize();
+              this.navigateToBoopViewDelay();
             }}
             underlayColor='#CDCDCD'>
-              <Animated.View style={[styles.circle, circleButtonStyle, {backgroundColor: color}]} />
+              <Animated.View style={[styles.circle, circleButtonStyle, {backgroundColor: color}]}>
+                <Image
+                  source={{uri: profilePic}}
+                  style={styles.profilePicture} />
+              </Animated.View>
           </TouchableHighlight>
           <Text
             style={styles.friendName}>
@@ -195,6 +199,7 @@ class HomeView extends ParseComponent {
         </View>
       );
     });
+    
     return (
       <View style={styles.container}>
         <FacebookLoginButton />
@@ -224,6 +229,12 @@ const styles = StyleSheet.create({
     margin: 4,
     padding: 10,
     alignItems: 'center',
+  },
+  profilePicture: {
+    width: 70,
+    height: 70,
+    borderRadius: 70/2,
+    margin: 5,
   },
   circle: {
     borderRadius: 80/2,
