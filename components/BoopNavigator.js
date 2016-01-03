@@ -45,7 +45,6 @@ class BoopNavigator extends ParseComponent {
       }
     }
 
-
     return (
       <Component
         name={route.name}

@@ -38,46 +38,71 @@ class HomeView extends ParseComponent {
   }
 
   componentDidMount() {
-    this.fetchFriends();
+    this.fetchFacebookFriends();
   }
 
-  fetchFriends() {
-    // TODO: use real data
-    const friends = [
-      {
-        id: 102,
-        firstName: 'Katniss',
-        lastName: 'Everdeen',
-      },
-      {
-        id: 145,
-        firstName: 'Dean',
-        lastName: 'Thomas',
-      },
-      {
-        id: 4456,
-        firstName: 'Leah',
-        lastName: 'Price',
-      },
-      {
-        id: 73,
-        firstName: 'Elphaba',
-        lastName: 'Thropp',
-      },
-      {
-        id: 1,
-        firstName: 'Meg',
-        lastName: 'Murry',
-      },
-      {
-        id: 89,
-        firstName: 'Joe',
-        lastName: 'Hardy',
-      },
-    ];
-    this.setState({
-      friends: friends,
-    })
+  /**
+   * Make an HTTP request to endpoint. Returns a promise.
+   *
+   * @param {string} endpoint - The URL of the endpoint.
+   * @param {string} method - The HTTP method to use. Should be one of:
+   * 'get', 'post', 'head', 'put', 'delete'.
+   * @param {object} data - Data to send with the request. This is an optional
+   *  parameter.
+   * @param {object} headers - Headers to send with the request. This is an optional
+   *  parameter.
+   */
+  makeRequest(endpoint, method, data, headers) {
+
+    // Form the final headers.
+    var headers = headers || {};
+    const defaultHeaders = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    };
+    const finalHeaders = Object.assign({}, defaultHeaders, headers);
+
+    const options = {
+      method: method,
+      headers: headers
+    };
+    if (method != 'get' && method != 'head') {
+      // `data` parameter is optional.
+      var data = data || {};
+      options.body = data;
+    }
+
+    return fetch(endpoint, options);
+  }
+
+  /**
+   * Make an HTTP request to a Facebook graph API endpoint. Returns a promise.
+   * This function automatically includes the user's token in the request.
+   *
+   * @param {string} endpoint - The relative URL of the endpoint.
+   * @param {string} method - The HTTP method to use. Should be one of:
+   * 'get', 'post', 'head', 'put', 'delete'.
+   */
+  makeFacebookRequest(endpoint, method) {
+    const urlBase = 'https://graph.facebook.com/v2.5/';
+    const accessToken = this.data.user.authData.facebook.access_token;
+    const finalUrl = urlBase + endpoint + '&access_token=' + accessToken;
+    return this.makeRequest(finalUrl, method)
+  }
+
+  fetchFacebookFriends() {
+    const friendsUrl = '/me/friends?fields=first_name,last_name,picture';
+    this.makeFacebookRequest(friendsUrl, 'get')
+      .then((response) => {
+        return response.json()
+      }).then((json) => {
+        const friends = json.data;
+        this.setState({
+          friends: friends,
+        });
+      }).catch((exception) => {
+        console.log('Parsing failed', exception)
+      });
   }
 
   increaseButtonSize() {
@@ -129,7 +154,6 @@ class HomeView extends ParseComponent {
       '#bcbd22',
       '#17becf',
     ];
-    // console.log('Parse data', this.data);
 
     // Build all the friend buttons.
     const friendElems = this.state.friends.map(function(friend, index) {
@@ -166,7 +190,7 @@ class HomeView extends ParseComponent {
           </TouchableHighlight>
           <Text
             style={styles.friendName}>
-              {friend.firstName}
+              {friend.first_name}
           </Text>
         </View>
       );

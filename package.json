@@ -9,6 +9,7 @@
     "parse": "1.6.3",
     "parse-react": "0.5.0",
     "react-native": "^0.15.0",
-    "react-native-facebook-login": "^1.0.2"
+    "react-native-facebook-login": "^1.0.2",
+    "whatwg-fetch": "^0.10.1"
   }
 }
