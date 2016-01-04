@@ -33,7 +33,6 @@ class HomeView extends ParseComponent {
   observe(props, state) {
     return {
       user: ParseReact.currentUser,
-      test: (new Parse.Query('Test')),
     };
   }
 
