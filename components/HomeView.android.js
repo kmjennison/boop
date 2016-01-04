@@ -6,7 +6,6 @@ import {
   AppRegistry,
   Component,
   Image,
-  NativeModules,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -40,7 +39,6 @@ class HomeView extends ParseComponent {
 
   componentDidMount() {
     this.fetchFacebookFriends();
-    NativeModules.ParseInstallation.show('Awesome', NativeModules.ParseInstallation.SHORT);
   }
 
   /**
