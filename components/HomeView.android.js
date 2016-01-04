@@ -114,6 +114,20 @@ class HomeView extends ParseComponent {
       }
     ).start();
   }
+
+  createBoopEvent() {
+    ParseReact.Mutation.Create('BoopEvent', {
+      sender: this.props.user,
+      receiver: this.props.user,
+    }).dispatch().then(
+      () => {
+        console.log('Successfully logged BoopEvent.');
+      },
+      (error) => {
+        console.log('Error logging BoopEvent:', error);
+      }
+    );
+  }
   
   navigateToBoopView() {
     this.props.navigator.push({
@@ -135,6 +149,10 @@ class HomeView extends ParseComponent {
         navigateToBoopViewInProgress: false,
       });
     }, 300);
+
+    // Log the boop event. This will create a push notification
+    // for the receiving user.
+    this.createBoopEvent();
   }
 
   render() {
