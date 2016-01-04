@@ -40,6 +40,7 @@ class HomeView extends ParseComponent {
 
   componentDidMount() {
     this.fetchFacebookFriends();
+    NativeModules.ParseInstallation.show('Awesome', NativeModules.ParseInstallation.SHORT);
   }
 
   /**
